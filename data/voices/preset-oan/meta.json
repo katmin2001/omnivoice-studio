@@ -1,0 +1,18 @@
+{
+  "id": "preset-oan",
+  "name": "Đoan (nữ miền Nam)",
+  "color": "#FF8C42",
+  "created": 1791039800.4429545,
+  "source": "VieNeu-TTS preset sample (Apache-2.0)",
+  "preset": true,
+  "styles": [
+    {
+      "id": "default",
+      "label": "Mặc định",
+      "file": "ref.wav",
+      "ref_text": "Nuôi con theo phong cách Do Thái, không chỉ tốt cho đứa trẻ, mà còn tốt cho cả các bậc cha mẹ.",
+      "duration": 6.14,
+      "transcribed": false
+    }
+  ]
+}

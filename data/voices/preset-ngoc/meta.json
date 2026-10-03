@@ -1,0 +1,18 @@
+{
+  "id": "preset-ngoc",
+  "name": "Ngọc (nữ miền Bắc)",
+  "color": "#4CC9F0",
+  "created": 1791039800.2173586,
+  "source": "VieNeu-TTS preset sample (Apache-2.0)",
+  "preset": true,
+  "styles": [
+    {
+      "id": "default",
+      "label": "Mặc định",
+      "file": "ref.wav",
+      "ref_text": "Trong phòng rất tù mù, nên có thể dễ dàng che dấu nó.",
+      "duration": 3.64,
+      "transcribed": false
+    }
+  ]
+}

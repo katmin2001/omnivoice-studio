@@ -1,0 +1,18 @@
+{
+  "id": "preset-tuyen",
+  "name": "Tuyên (nam miền Bắc)",
+  "color": "#06D6A0",
+  "created": 1791039800.289739,
+  "source": "VieNeu-TTS preset sample (Apache-2.0)",
+  "preset": true,
+  "styles": [
+    {
+      "id": "default",
+      "label": "Mặc định",
+      "file": "ref.wav",
+      "ref_text": "Bạn cầm khúc cây, và ném vào bãi cỏ xanh tươi rậm rạp ở đằng xa.",
+      "duration": 4.52,
+      "transcribed": false
+    }
+  ]
+}

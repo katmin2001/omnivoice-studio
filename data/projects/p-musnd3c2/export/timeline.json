@@ -1,0 +1,236 @@
+{
+ "project": "p-musnd3c2",
+ "name": "Luffy mò lên tận tàu, Enel",
+ "gap": 0.3,
+ "duration": 12.93,
+ "lines": [
+  {
+   "n": 1,
+   "label": "b01",
+   "text": "Luffy mò lên tận tàu, Enel ưỡn ngực, ta là thần.",
+   "spoken_text": "Luffy mò lên tận tàu, Ê-nen ưỡn ngực, ta là thần.",
+   "start": 0.0,
+   "end": 3.42,
+   "duration": 3.42,
+   "output_id": "20261004-000940-e12674",
+   "seed": 437833092,
+   "errors": 2,
+   "words": [
+    {
+     "w": "Luffy",
+     "start": 0.0,
+     "end": 0.44
+    },
+    {
+     "w": "mò",
+     "start": 0.44,
+     "end": 0.76
+    },
+    {
+     "w": "lên",
+     "start": 0.76,
+     "end": 0.92
+    },
+    {
+     "w": "tận",
+     "start": 0.92,
+     "end": 1.14
+    },
+    {
+     "w": "tàu,",
+     "start": 1.14,
+     "end": 1.42
+    },
+    {
+     "w": "Ê-nen",
+     "start": 1.42,
+     "end": 1.82
+    },
+    {
+     "w": "ưỡn",
+     "start": 1.82,
+     "end": 2.22
+    },
+    {
+     "w": "ngực,",
+     "start": 2.22,
+     "end": 2.42
+    },
+    {
+     "w": "ta",
+     "start": 2.68,
+     "end": 2.8
+    },
+    {
+     "w": "là",
+     "start": 2.8,
+     "end": 2.96
+    },
+    {
+     "w": "thần.",
+     "start": 2.96,
+     "end": 3.18
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "label": "b02",
+   "text": "Luffy nhìn một lượt rồi phán, thần cái con khỉ.",
+   "spoken_text": "Luffy nhìn một lượt rồi phán, thần cái con khỉ.",
+   "start": 3.72,
+   "end": 7.22,
+   "duration": 3.5,
+   "output_id": "20261004-000942-d849eb",
+   "seed": 1306041124,
+   "errors": 1,
+   "words": [
+    {
+     "w": "Luffy",
+     "start": 3.72,
+     "end": 4.52
+    },
+    {
+     "w": "nhìn",
+     "start": 4.52,
+     "end": 4.82
+    },
+    {
+     "w": "một",
+     "start": 4.82,
+     "end": 4.96
+    },
+    {
+     "w": "lượt",
+     "start": 4.96,
+     "end": 5.2
+    },
+    {
+     "w": "rồi",
+     "start": 5.2,
+     "end": 5.36
+    },
+    {
+     "w": "phán,",
+     "start": 5.36,
+     "end": 5.72
+    },
+    {
+     "w": "thần",
+     "start": 5.92,
+     "end": 6.24
+    },
+    {
+     "w": "cái",
+     "start": 6.24,
+     "end": 6.48
+    },
+    {
+     "w": "con",
+     "start": 6.48,
+     "end": 6.72
+    },
+    {
+     "w": "khỉ.",
+     "start": 6.72,
+     "end": 6.96
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "label": "b03",
+   "text": "Ổng áp tay vào tận người, giật 100 triệu vôn, Luffy chỉ nhăn mặt, vcl.",
+   "spoken_text": "Ổng áp tay vào tận người, giật một trăm triệu vôn, Luffy chỉ nhăn mặt, vê-cờ-lờ.",
+   "start": 7.52,
+   "end": 12.93,
+   "duration": 5.41,
+   "output_id": "20261004-000944-2a194b",
+   "seed": 896745423,
+   "errors": 0,
+   "words": [
+    {
+     "w": "Ổng",
+     "start": 7.52,
+     "end": 7.92
+    },
+    {
+     "w": "áp",
+     "start": 7.92,
+     "end": 8.14
+    },
+    {
+     "w": "tay",
+     "start": 8.14,
+     "end": 8.36
+    },
+    {
+     "w": "vào",
+     "start": 8.36,
+     "end": 8.54
+    },
+    {
+     "w": "tận",
+     "start": 8.54,
+     "end": 8.74
+    },
+    {
+     "w": "người,",
+     "start": 8.74,
+     "end": 9.42
+    },
+    {
+     "w": "giật",
+     "start": 9.42,
+     "end": 9.58
+    },
+    {
+     "w": "một",
+     "start": 9.58,
+     "end": 9.74
+    },
+    {
+     "w": "trăm",
+     "start": 9.74,
+     "end": 9.9
+    },
+    {
+     "w": "triệu",
+     "start": 9.9,
+     "end": 10.2
+    },
+    {
+     "w": "vôn,",
+     "start": 10.2,
+     "end": 10.58
+    },
+    {
+     "w": "Luffy",
+     "start": 10.58,
+     "end": 11.14
+    },
+    {
+     "w": "chỉ",
+     "start": 11.14,
+     "end": 11.42
+    },
+    {
+     "w": "nhăn",
+     "start": 11.42,
+     "end": 11.62
+    },
+    {
+     "w": "mặt,",
+     "start": 11.62,
+     "end": 12.2
+    },
+    {
+     "w": "vê-cờ-lờ.",
+     "start": 12.2,
+     "end": 12.93
+    }
+   ]
+  }
+ ],
+ "missing": []
+}

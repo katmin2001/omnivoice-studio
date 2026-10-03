@@ -1,0 +1,218 @@
+{
+ "id": "p-musnd3c2",
+ "name": "Luffy mò lên tận tàu, Enel",
+ "created": 1791047375.138,
+ "text": "HOOK: GIẬT TRĂM TRIỆU VÔN\nb01: Luffy mò lên tận tàu, Enel ưỡn ngực, ta là thần.   [sfx:  @  ]\nb02: Luffy nhìn một lượt rồi phán, *thần cái con khỉ*.   [sfx:  @  ]\nb03: Ổng áp tay vào tận người, giật 100 triệu vôn, Luffy chỉ nhăn mặt, vcl.   [sfx:  @  ]",
+ "voice_id": "v-c8fb93c704",
+ "lines": [
+  {
+   "n": 1,
+   "label": "b01",
+   "text": "Luffy mò lên tận tàu, Enel ưỡn ngực, ta là thần.",
+   "style_id": null,
+   "output_id": "20261004-000940-e12674",
+   "seed": 437833092,
+   "qa": {
+    "heard": "Luffy mò lên tận tàu, Enen đưỡng ngực, ta là thần.",
+    "errors": 2,
+    "near": 0,
+    "cer": 0.087,
+    "wer": 0.25,
+    "words": [
+     {
+      "w": "Luffy",
+      "s": "ok"
+     },
+     {
+      "w": "mò",
+      "s": "ok"
+     },
+     {
+      "w": "lên",
+      "s": "ok"
+     },
+     {
+      "w": "tận",
+      "s": "ok"
+     },
+     {
+      "w": "tàu,",
+      "s": "ok"
+     },
+     {
+      "w": "Ê-nen",
+      "s": "wrong"
+     },
+     {
+      "w": "ưỡn",
+      "s": "wrong"
+     },
+     {
+      "w": "ngực,",
+      "s": "ok"
+     },
+     {
+      "w": "ta",
+      "s": "ok"
+     },
+     {
+      "w": "là",
+      "s": "ok"
+     },
+     {
+      "w": "thần.",
+      "s": "ok"
+     }
+    ],
+    "extra": []
+   },
+   "duration": 3.42,
+   "error": null
+  },
+  {
+   "n": 2,
+   "label": "b02",
+   "text": "Luffy nhìn một lượt rồi phán, thần cái con khỉ.",
+   "style_id": null,
+   "output_id": "20261004-000942-d849eb",
+   "seed": 1306041124,
+   "qa": {
+    "heard": "Lô Phi nhìn một lượt rồi phán thận cái con khỉ",
+    "errors": 1,
+    "near": 1,
+    "cer": 0.133,
+    "wer": 0.3,
+    "words": [
+     {
+      "w": "Luffy",
+      "s": "wrong"
+     },
+     {
+      "w": "nhìn",
+      "s": "ok"
+     },
+     {
+      "w": "một",
+      "s": "ok"
+     },
+     {
+      "w": "lượt",
+      "s": "ok"
+     },
+     {
+      "w": "rồi",
+      "s": "ok"
+     },
+     {
+      "w": "phán,",
+      "s": "ok"
+     },
+     {
+      "w": "thần",
+      "s": "near"
+     },
+     {
+      "w": "cái",
+      "s": "ok"
+     },
+     {
+      "w": "con",
+      "s": "ok"
+     },
+     {
+      "w": "khỉ.",
+      "s": "ok"
+     }
+    ],
+    "extra": []
+   },
+   "duration": 3.5,
+   "error": null
+  },
+  {
+   "n": 3,
+   "label": "b03",
+   "text": "Ổng áp tay vào tận người, giật 100 triệu vôn, Luffy chỉ nhăn mặt, vcl.",
+   "style_id": null,
+   "output_id": "20261004-000944-2a194b",
+   "seed": 896745423,
+   "qa": {
+    "heard": "Ông áp tay vào tận người, giật một trăm triệu vôn. Luffy chỉ nhăn mặt, về cờ lờ.",
+    "errors": 0,
+    "near": 2,
+    "cer": 0.026,
+    "wer": 0.111,
+    "words": [
+     {
+      "w": "Ổng",
+      "s": "near"
+     },
+     {
+      "w": "áp",
+      "s": "ok"
+     },
+     {
+      "w": "tay",
+      "s": "ok"
+     },
+     {
+      "w": "vào",
+      "s": "ok"
+     },
+     {
+      "w": "tận",
+      "s": "ok"
+     },
+     {
+      "w": "người,",
+      "s": "ok"
+     },
+     {
+      "w": "giật",
+      "s": "ok"
+     },
+     {
+      "w": "một",
+      "s": "ok"
+     },
+     {
+      "w": "trăm",
+      "s": "ok"
+     },
+     {
+      "w": "triệu",
+      "s": "ok"
+     },
+     {
+      "w": "vôn,",
+      "s": "ok"
+     },
+     {
+      "w": "Luffy",
+      "s": "ok"
+     },
+     {
+      "w": "chỉ",
+      "s": "ok"
+     },
+     {
+      "w": "nhăn",
+      "s": "ok"
+     },
+     {
+      "w": "mặt,",
+      "s": "ok"
+     },
+     {
+      "w": "vê-cờ-lờ.",
+      "s": "near"
+     }
+    ],
+    "extra": []
+   },
+   "duration": 5.41,
+   "error": null
+  }
+ ],
+ "updated": 1791050522.9033585
+}

@@ -1,0 +1,18 @@
+{
+  "id": "preset-binh",
+  "name": "Bình (nam miền Bắc)",
+  "color": "#FFD60A",
+  "created": 1791039800.0465512,
+  "source": "VieNeu-TTS preset sample (Apache-2.0)",
+  "preset": true,
+  "styles": [
+    {
+      "id": "default",
+      "label": "Mặc định",
+      "file": "ref.wav",
+      "ref_text": "Anh chỉ muốn được nhìn nhận như là một huấn luyện viên.",
+      "duration": 2.65,
+      "transcribed": false
+    }
+  ]
+}

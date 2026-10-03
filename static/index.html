@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OmniVoice Studio</title>
+<meta name="description" content="Giao diện local cho OmniVoice: nhân bản giọng, thiết kế giọng, đọc kịch bản tiếng Việt theo từng dòng, soát lỗi bằng Whisper. Developed by Kenzy.">
+<meta name="author" content="Kenzy">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='5' y='5' width='54' height='54' fill='%23FFD60A' stroke='%23111' stroke-width='6'/%3E%3Ctext x='32' y='45' font-size='30' text-anchor='middle' font-family='Impact,Arial Black,sans-serif' fill='%23111'%3EOV%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/css/fonts.css">
+<link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+<div class="speedlines" aria-hidden="true"></div>
+
+<header class="masthead">
+  <div class="logo">
+    <span class="logo-kana" aria-hidden="true">オムニボイス・スタジオ</span>
+    <h1>OMNI<span>VOICE</span> STUDIO</h1>
+    <span class="sticker burst" aria-hidden="true">FREE!</span>
+  </div>
+  <div class="status" id="status" aria-live="polite">
+    <div class="status-row"><span class="dot" id="statusDot"></span><span id="statusText">Đang kết nối máy chủ…</span></div>
+    <div class="vram"><div class="vram-bar"><i id="vramFill"></i></div><span class="mono" id="vramText">VRAM —</span></div>
+  </div>
+</header>
+
+<main class="page">
+  <!-- ------------------------------------------------------------ script -->
+  <section class="panel panel-script">
+    <h2 class="caption">KỊCH BẢN</h2>
+    <div class="script-tools">
+      <div class="seg seg-sm" id="scriptMode" role="tablist">
+        <button type="button" data-v="single" class="is-active">MỘT LẦN</button>
+        <button type="button" data-v="lines">THEO DÒNG</button>
+      </div>
+      <button class="btn btn-sm" id="openDict" type="button" title="Từ điển phát âm: chữ nào đọc thành gì">TỪ ĐIỂN</button>
+      <label class="check check-sm"><input type="checkbox" id="showSpoken"><span>Xem lời sẽ đọc</span></label>
+    </div>
+    <textarea id="text" placeholder="Gõ lời thoại vào đây… Chế độ THEO DÒNG: mỗi dòng một câu, hoặc dán thẳng script.txt (b01: … [sfx: @ ]) — app tự bỏ nhãn và chỗ trống SFX." spellcheck="false"></textarea>
+    <div class="spoken mono" id="spoken" hidden></div>
+    <div class="script-foot">
+      <div class="counter mono"><b id="wordCount">0</b> từ · ~<b id="estDur">0</b>s</div>
+      <div class="tags" id="tags" title="Chèn hiệu ứng phi lời vào vị trí con trỏ"></div>
+    </div>
+    <p class="note" id="longHint" hidden>Bài dài: nên chuyển <b>THEO DÒNG</b> để đọc từng câu, thu lại riêng câu hỏng và xuất kèm mốc thời gian.</p>
+
+    <div class="lines-wrap" id="linesWrap" hidden>
+      <div class="lines-bar">
+        <div class="proj">
+          <label for="projectSelect">Dự án</label>
+          <select id="projectSelect" class="input"></select>
+          <button class="btn btn-sm" id="projectNew" type="button" title="Dự án mới từ nội dung đang gõ">+ MỚI</button>
+          <button class="btn btn-sm" id="projectDelete" type="button" title="Xoá dự án">×</button>
+        </div>
+        <div class="lines-stats mono" id="linesStats"></div>
+      </div>
+      <ol class="lines" id="lines"></ol>
+      <div class="lines-actions">
+        <button class="btn" id="genMissing" type="button">CHỈ DÒNG CHƯA CÓ / LỖI</button>
+        <button class="btn btn-stop" id="stopBatch" type="button" hidden>DỪNG</button>
+        <label class="gap">Nghỉ giữa dòng <input id="gap" class="input mono" type="number" min="0" max="3" step="0.05" value="0.3"> s</label>
+        <button class="btn btn-alt" id="exportProject" type="button">XUẤT (wav + mp3 + timing)</button>
+      </div>
+      <div class="export-result" id="exportResult" hidden></div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ voice -->
+  <section class="panel panel-voice">
+    <h2 class="caption caption-pink">GIỌNG</h2>
+    <div class="tabs" role="tablist" id="modeTabs">
+      <button class="tab is-active" role="tab" data-mode="clone">NHÂN BẢN</button>
+      <button class="tab" role="tab" data-mode="design">THIẾT KẾ</button>
+      <button class="tab" role="tab" data-mode="auto">TỰ ĐỘNG</button>
+    </div>
+
+    <div class="mode is-active" id="mode-clone">
+      <div class="voice-grid" id="voiceGrid"></div>
+      <div class="styles" id="styles" hidden>
+        <span class="styles-label">Sắc thái</span>
+        <div class="chips" id="styleChips"></div>
+        <button class="btn btn-sm" id="addStyle" type="button" title="Thêm một đoạn mẫu khác cho giọng này (vui, bựa, hét…)">+ SẮC THÁI</button>
+      </div>
+      <button class="btn btn-dashed voice-add" id="addVoice" type="button">+ THÊM GIỌNG MẪU</button>
+    </div>
+
+    <div class="mode" id="mode-design">
+      <div class="chip-groups" id="designChips"></div>
+      <input id="instructExtra" class="input" placeholder="Mô tả thêm bằng tiếng Anh, vd: warm, calm">
+      <div class="instruct-preview mono"><span>instruct:</span> <code id="instructPreview">—</code></div>
+      <p class="note">Thiết kế giọng được huấn luyện trên tiếng Trung và tiếng Anh. Với tiếng Việt có thể kém ổn định — thích rồi thì bấm <b>Dùng làm giọng mẫu</b> ở kết quả để khoá giọng lại.</p>
+    </div>
+
+    <div class="mode" id="mode-auto">
+      <p class="note big">Model tự chọn một giọng ngẫu nhiên. Muốn lặp lại đúng giọng đó, giữ nguyên <b>seed</b> trong phần Tinh chỉnh.</p>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ settings -->
+  <section class="panel panel-settings">
+    <h2 class="caption caption-cyan">TINH CHỈNH</h2>
+    <div class="fields">
+      <div class="field">
+        <label for="language">Ngôn ngữ</label>
+        <select id="language" class="input"></select>
+      </div>
+      <div class="field">
+        <label for="model">Model</label>
+        <select id="model" class="input"></select>
+        <small id="modelNote" class="hint"></small>
+      </div>
+      <div class="field field-range">
+        <label for="speed">Tốc độ <output id="speedOut" class="mono">1.00×</output></label>
+        <input type="range" id="speed" min="0.6" max="1.6" step="0.05" value="1">
+        <small class="hint" id="speedHint">Model giữ nhịp tự nhiên, phần chênh được kéo giãn audio nên không nuốt chữ hay ngắt quãng.</small>
+      </div>
+      <div class="field">
+        <label>Chất lượng</label>
+        <div class="seg" id="steps">
+          <button type="button" data-v="16">NHANH<small>16 bước</small></button>
+          <button type="button" data-v="32" class="is-active">CHUẨN<small>32 bước</small></button>
+          <button type="button" data-v="64">KỸ<small>64 bước</small></button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Số bản thử <small class="hint">(giữ bản đọc đúng nhất, dừng sớm khi sạch lỗi)</small></label>
+        <div class="seg seg-4" id="takes">
+          <button type="button" data-v="1" class="is-active">1</button>
+          <button type="button" data-v="2">2</button>
+          <button type="button" data-v="3">3</button>
+          <button type="button" data-v="5">5</button>
+        </div>
+      </div>
+      <label class="check"><input type="checkbox" id="qaAuto" checked><span>Tự soát lỗi đọc bằng Whisper</span></label>
+      <label class="check"><input type="checkbox" id="readNumbers" checked><span>Đọc số thành chữ (100 → một trăm)</span></label>
+      <div class="field">
+        <label for="seed">Seed <small class="hint">(trống = ngẫu nhiên)</small></label>
+        <div class="seed-row">
+          <input id="seed" class="input mono" type="number" min="0" max="2147483647" placeholder="ngẫu nhiên">
+          <button type="button" class="btn btn-sm" id="seedDice" title="Bốc seed ngẫu nhiên">🎲</button>
+          <button type="button" class="btn btn-sm" id="seedClear" title="Xoá seed">×</button>
+        </div>
+      </div>
+      <details class="advanced">
+        <summary>Nâng cao</summary>
+        <div class="field">
+          <label for="speedMode">Cách đổi tốc độ</label>
+          <select id="speedMode" class="input">
+            <option value="auto">Tự động: model 0,85–1,2×, phần còn lại kéo giãn</option>
+            <option value="model">Chỉ model (dễ ngắt quãng khi chậm, nuốt chữ khi nhanh)</option>
+            <option value="stretch">Chỉ kéo giãn audio (model luôn 1,0×)</option>
+          </select>
+        </div>
+        <div class="field field-range">
+          <label for="guidance">Guidance <output id="guidanceOut" class="mono">2.0</output></label>
+          <input type="range" id="guidance" min="1" max="4" step="0.1" value="2">
+          <small class="hint">Cao hơn = bám giọng mẫu và chữ chặt hơn, nhưng dễ cứng.</small>
+        </div>
+        <label class="check"><input type="checkbox" id="denoise" checked><span>Khử nhiễu đầu ra (denoise)</span></label>
+      </details>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ action -->
+  <section class="action">
+    <button id="generate" class="go" type="button">
+      <span class="go-label">TẠO GIỌNG!</span>
+      <span class="go-sub mono">Ctrl + Enter</span>
+    </button>
+    <div class="progress" id="progress" hidden>
+      <div class="progress-bar"><i id="progressFill"></i></div>
+      <span class="mono" id="progressText"></span>
+    </div>
+    <span class="pop burst" id="pop" aria-hidden="true">XONG!</span>
+  </section>
+
+  <!-- ------------------------------------------------------------ result -->
+  <section class="panel panel-result">
+    <h2 class="caption caption-yellow">KẾT QUẢ</h2>
+    <div class="empty" id="resultEmpty">
+      <span class="empty-sfx">…</span>
+      <p>Chưa có gì. Viết kịch bản, chọn giọng, rồi đập nút <b>TẠO GIỌNG!</b></p>
+    </div>
+    <div class="result" id="result" hidden>
+      <div class="bubble">
+        <canvas id="wave" height="120" aria-label="Dạng sóng"></canvas>
+        <div class="player">
+          <button id="play" class="play" type="button" aria-label="Phát">▶</button>
+          <span class="time mono" id="time">0:00 / 0:00</span>
+          <button id="reseed" class="btn" type="button" title="Tạo lại cùng cài đặt, seed khác">SEED KHÁC</button>
+          <a id="download" class="btn" download>TẢI .WAV</a>
+          <button id="asVoice" class="btn btn-alt" type="button">DÙNG LÀM GIỌNG MẪU</button>
+          <button id="asStyle" class="btn btn-alt" type="button" hidden title="Thêm bản này làm sắc thái mới của giọng đang chọn">+ SẮC THÁI</button>
+        </div>
+      </div>
+      <div class="qa" id="qa"></div>
+      <dl class="stats mono" id="stats"></dl>
+      <p class="result-text" id="resultText"></p>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ history -->
+  <section class="panel panel-history">
+    <h2 class="caption">LỊCH SỬ</h2>
+    <ol id="history" class="history"></ol>
+    <p class="empty-line" id="historyEmpty">Các bản đã tạo sẽ nằm ở đây (lưu trong <code>data/outputs</code>).</p>
+  </section>
+</main>
+
+<footer class="foot">
+  <span class="credit">DEVELOPED BY <b>KENZY</b></span>
+  <span>OmniVoice (k2-fsa, Apache-2.0) chạy trên GPU của bạn · không giới hạn ký tự · không gửi dữ liệu đi đâu.</span>
+  <span>Chỉ nhân bản giọng của bạn hoặc giọng bạn có quyền dùng. Ghi "Giọng đọc AI" khi đăng.</span>
+</footer>
+
+<!-- ------------------------------------------------------------ add / edit voice or style -->
+<dialog id="voiceModal" class="modal">
+  <form class="modal-card" id="voiceForm" novalidate>
+    <h3 class="caption caption-pink" id="modalTitle">THÊM GIỌNG MẪU</h3>
+    <button type="button" class="modal-close" id="modalClose" aria-label="Đóng">×</button>
+
+    <div class="field" id="fName">
+      <label for="vName">Tên giọng</label>
+      <input id="vName" class="input" maxlength="40" placeholder="vd: Giọng tôi bản bựa">
+    </div>
+    <div class="field" id="fLabel" hidden>
+      <label for="vLabel">Tên sắc thái</label>
+      <input id="vLabel" class="input" maxlength="30" placeholder="vd: Bựa, Hét, Thì thầm, Kể chuyện">
+    </div>
+
+    <div class="source" id="vSource">
+      <div class="tabs tabs-sm" id="srcTabs">
+        <button type="button" class="tab is-active" data-src="file">TẢI FILE</button>
+        <button type="button" class="tab" data-src="rec">GHI ÂM</button>
+      </div>
+      <div class="src is-active" id="src-file">
+        <label class="drop" id="drop">
+          <input type="file" id="vFile" accept="audio/*,video/*,.webm,.m4a,.mp3,.wav,.ogg,.flac,.mp4" hidden>
+          <b>Kéo thả</b> hoặc bấm để chọn file
+          <small>wav · mp3 · m4a · ogg · webm · mp4 — file dài hơn 20 s sẽ được cắt lấy ~10 s đầu và Whisper chép lại lời</small>
+        </label>
+      </div>
+      <div class="src" id="src-rec">
+        <div class="rec-row">
+          <button type="button" class="btn btn-rec" id="recBtn">● GHI ÂM</button>
+          <div class="rec-meter"><i id="recLevel"></i></div>
+          <span class="mono" id="recTime">0.0s</span>
+        </div>
+        <small class="hint">Đọc 5–10 giây đúng kiểu giọng bạn muốn (vui, bựa, trầm…). Tự dừng ở 20 giây.</small>
+      </div>
+      <div class="preview" id="vPreview" hidden>
+        <audio controls id="vPreviewAudio"></audio>
+        <span class="mono" id="vFileName"></span>
+        <button type="button" class="btn btn-sm" id="vClear">BỎ</button>
+      </div>
+    </div>
+
+    <div class="field" id="fText">
+      <label for="vText">Lời trong đoạn mẫu <small class="hint">(để trống → Whisper tự nghe)</small></label>
+      <textarea id="vText" class="input" rows="3" placeholder="Chỉ gõ đúng những gì nghe thấy trong đoạn mẫu — không dán cả kịch bản dài hơn file."></textarea>
+    </div>
+
+    <p class="note"><b>Mẹo:</b> 3–10 giây, ít tiếng ồn, cùng ngôn ngữ với kịch bản, đọc đúng kiểu bạn muốn nghe lại. Chỉ clone giọng của bạn hoặc giọng bạn có quyền dùng.</p>
+
+    <div class="modal-actions">
+      <button type="button" class="btn" id="modalCancel">HUỶ</button>
+      <button type="submit" class="btn btn-primary" id="modalSave">LƯU GIỌNG</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ------------------------------------------------------------ pronunciation dictionary -->
+<dialog id="dictModal" class="modal">
+  <div class="modal-card">
+    <h3 class="caption caption-cyan">TỪ ĐIỂN PHÁT ÂM</h3>
+    <button type="button" class="modal-close" id="dictClose" aria-label="Đóng">×</button>
+    <p class="hint">Chữ bên trái (nguyên từ, không phân biệt hoa thường) được đọc thành chữ bên phải. Text hiển thị không đổi; chỉ phần đưa cho model đổi. Dùng dấu gạch nối để tách âm: <code>vê-cờ-lờ</code>.</p>
+    <table class="dict" id="dictTable">
+      <thead><tr><th>Chữ</th><th>Đọc thành</th><th title="Bật/tắt">Bật</th><th></th></tr></thead>
+      <tbody id="dictRows"></tbody>
+    </table>
+    <div class="dict-add">
+      <input id="dictFrom" class="input" placeholder="Chữ, vd: Zoro">
+      <input id="dictTo" class="input" placeholder="Đọc thành, vd: Dô-rô">
+      <button type="button" class="btn btn-sm" id="dictAdd">+ THÊM</button>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn" id="dictReset" title="Về bộ mặc định của kênh">MẶC ĐỊNH</button>
+      <button type="button" class="btn btn-primary" id="dictSave">LƯU</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- ------------------------------------------------------------ confirm -->
+<dialog id="confirmModal" class="modal modal-sm">
+  <div class="modal-card">
+    <h3 class="caption caption-yellow">CHẮC CHƯA?</h3>
+    <p id="confirmText" class="confirm-text"></p>
+    <div class="modal-actions">
+      <button type="button" class="btn" id="confirmNo">THÔI</button>
+      <button type="button" class="btn btn-danger" id="confirmYes">XOÁ</button>
+    </div>
+  </div>
+</dialog>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+<audio id="audio" preload="auto"></audio>
+<audio id="previewAudio" preload="none"></audio>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+data/outputs/
+data/voices/v-*/
+data/voices/*/prompt-*.pt

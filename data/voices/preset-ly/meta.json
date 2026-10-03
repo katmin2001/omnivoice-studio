@@ -1,0 +1,18 @@
+{
+  "id": "preset-ly",
+  "name": "Ly (nữ miền Bắc)",
+  "color": "#FF4D8D",
+  "created": 1791039800.1348298,
+  "source": "VieNeu-TTS preset sample (Apache-2.0)",
+  "preset": true,
+  "styles": [
+    {
+      "id": "default",
+      "label": "Mặc định",
+      "file": "ref.wav",
+      "ref_text": "Chúng ta có thể áp dụng logic tương tự với người khác.",
+      "duration": 3.07,
+      "transcribed": false
+    }
+  ]
+}

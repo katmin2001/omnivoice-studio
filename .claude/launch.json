@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "studio",
+      "runtimeExecutable": "D:\\workspace\\omnivoice-studio\\.venv\\Scripts\\python.exe",
+      "runtimeArgs": ["server.py"],
+      "port": 8765
+    }
+  ]
+}

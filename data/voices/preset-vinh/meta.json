@@ -1,0 +1,18 @@
+{
+  "id": "preset-vinh",
+  "name": "Vĩnh (nam miền Nam)",
+  "color": "#9B5DE5",
+  "created": 1791039800.3615966,
+  "source": "VieNeu-TTS preset sample (Apache-2.0)",
+  "preset": true,
+  "styles": [
+    {
+      "id": "default",
+      "label": "Mặc định",
+      "file": "ref.wav",
+      "ref_text": "Đến cuối thế kỷ 19, ngành đánh bắt cá được thương mại hóa.",
+      "duration": 3.43,
+      "transcribed": false
+    }
+  ]
+}
